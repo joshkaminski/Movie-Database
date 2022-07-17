@@ -4,46 +4,79 @@ import java.util.*;
 
 public class AddMovie {
 	
-	public static void add_movie(Connection conn, Statement state) throws SQLException {
+	public static void add_movie(Connection conn, Scanner input) throws SQLException {
 		
 		String title = "";
 		int year = 0;
 		double rating = 0.0;
 		String genre = "";
 		
-		Scanner t = new Scanner(System.in);
-		System.out.println("What is the title of the movie you would like to add to the database?");
-		title = t.nextLine();
+		String add = "INSERT INTO Movie VALUES (?, ?, ?, ?)";
+		String check = "SELECT count(*) from Movie WHERE title = ? AND year = ?";
 		
+		boolean running = true;
 		
-		Scanner y = new Scanner(System.in);
-		System.out.println("What is the year " + title + " was released?");
-		year = y.nextInt();
+		while(running) {
 		
+			// get_input(title, year, rating, genre, input);
+			
+			System.out.println("What is the title of the movie you would like to add to the database?");
+			input.nextLine();
+			title = input.nextLine().trim();
+			
+			System.out.println("What is the year " + title + " was released?");
+			year = input.nextInt();
+			
+			System.out.println("What is the rating (from 0-10) of " + title + "?");
+			rating = input.nextDouble();
+			
+			System.out.println("What is the genre of " + title + "?");
+			input.nextLine();
+			genre = input.nextLine().trim();
 		
-		Scanner r = new Scanner(System.in);
-		System.out.println("What is the rating (from 0-10) of " + title + "?");
-		rating = r.nextDouble();
-		
-		
-		Scanner g = new Scanner(System.in);
-		System.out.println("What is the genre of " + title + "?");
-		genre = g.nextLine();
-		
-		
-		String add = "INSERT INTO Movie VALUES ('" + title + "', " + year + ", " + rating + ", '" + genre + "')";
-		
-		state.executeUpdate(add);
-		
-		System.out.println("Move successfully added. Would you like to add another movie or return to the menu?");
-		
-		/*
-		t.close();
-		y.close();
-		r.close();
-		g.close();
-		*/
+			// String add = "INSERT INTO Movie VALUES ('" + title + "', " + year + ", " + rating + ", '" + genre + "')";
+			
+			PreparedStatement check_statement = conn.prepareStatement(check);
+			check_statement.setString(1, title);
+			check_statement.setInt(2, year);
+			ResultSet check_result = check_statement.executeQuery();
+			
+			if(check_result.next()) {
+				
+				if(check_result.getInt(1) == 1) {
+					System.out.println(title + " already exists in the database.");
+					System.out.println();
+				}
+				else{
+					PreparedStatement add_statement = conn.prepareStatement(add);
+					
+					add_statement.setString(1, title);
+					add_statement.setInt(2, year);
+					add_statement.setDouble(3, rating);
+					add_statement.setString(4, genre);
+				
+					add_statement.executeUpdate();
+					
+					System.out.println(title + " has been successfully added to the database.");
+					System.out.println();
+					
+				}
+			}
+			
+			String new_line = System.getProperty("line.separator");
+			System.out.println("Would you like to: " + new_line + "1) Add another movie " + new_line + "2) Return to the menu");
+			System.out.println();
+			int ans = input.nextInt();
+			
+			if(ans == 2) {
+				running = false;
+			}
+		}
 	}
 	
-
+	public static void get_input(String title, int year, double rating, String genre, Scanner input) {
+		
+		
+		
+	}
 }
