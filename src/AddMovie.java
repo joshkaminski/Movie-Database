@@ -4,6 +4,12 @@ import java.util.*;
 
 public class AddMovie {
 	
+	int temp = 0;
+	
+	public AddMovie() throws SQLException{
+		
+	}
+	
 	public static void add_movie(Connection conn, Scanner input) throws SQLException {
 		
 		String title = "";
@@ -39,17 +45,18 @@ public class AddMovie {
 			PreparedStatement check_statement = conn.prepareStatement(check);
 			check_statement.setString(1, title);
 			check_statement.setInt(2, year);
+			
 			ResultSet check_result = check_statement.executeQuery();
 			
 			if(check_result.next()) {
 				
 				if(check_result.getInt(1) == 1) {
+					System.out.println();
 					System.out.println(title + " already exists in the database.");
 					System.out.println();
 				}
 				else{
 					PreparedStatement add_statement = conn.prepareStatement(add);
-					
 					add_statement.setString(1, title);
 					add_statement.setInt(2, year);
 					add_statement.setDouble(3, rating);
@@ -57,6 +64,7 @@ public class AddMovie {
 				
 					add_statement.executeUpdate();
 					
+					System.out.println();
 					System.out.println(title + " has been successfully added to the database.");
 					System.out.println();
 					
@@ -75,8 +83,6 @@ public class AddMovie {
 	}
 	
 	public static void get_input(String title, int year, double rating, String genre, Scanner input) {
-		
-		
 		
 	}
 }

@@ -43,7 +43,7 @@ public class MovieDatabase {
 				//access_movie();
 			}
 			else if(selection == 3){
-				//remove_movie();
+				RemoveMovie.remove_movie(conn, input);
 			}
 			else {
 				break;
