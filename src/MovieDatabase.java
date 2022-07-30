@@ -12,11 +12,18 @@ public class MovieDatabase {
 	String username = "root";
 	String password = "jkamMySQL24";
 	Connection conn;
-	Statement state;
 	
 	boolean running = true;
 	int selection = 0;
 	
+	String border = "***************************************************************************";
+	String new_line = System.getProperty("line.separator");
+	
+	AddMovie add = new AddMovie(input);
+	BrowseMovie browse = new BrowseMovie(input);
+	RemoveMovie remove = new RemoveMovie(input);
+	// UpdateMovie update = new UpdateMovie();
+		
 	// main method instantiates instance of a MovieDatabase
 	public static void main(String[] args) throws SQLException{
 		
@@ -30,43 +37,43 @@ public class MovieDatabase {
 		
 		// establish connection to database
 		conn = DriverManager.getConnection(url, username, password);
-		state = conn.createStatement();
+		
+		System.out.println(border + new_line + "Hello! Welcome to the Movie Database!");
+		
 		
 		while(running) {
 			
 			selection = main_menu();
 			
-			if(selection == 1) {
-				AddMovie.add_movie(conn, input);
+			if(selection == 0) {
+				System.out.println(border);
+				selection = main_menu();
+			}
+			else if(selection == 1) {
+				System.out.println(border);
+				browse.browse_movie(conn);
 			}
 			else if(selection == 2) {
-				//access_movie();
+				add.add_movie(conn);
 			}
 			else if(selection == 3){
-				RemoveMovie.remove_movie(conn, input);
+				remove.remove_movie(conn);
+				//System.out.println(border);
+			}
+			else if(selection == 4){
+				//update.update_movie(conn, input);
 			}
 			else {
+				
+				System.out.println(border + new_line + "Thank you for using the Movie Database. Goodbye.");
 				break;
 				
 			}
 		}
 		
-		// sta.executeUpdate("INSERT INTO Movie VALUES (9.5, 'Thriller', 'Shutter Island')");
-		ResultSet res = state.executeQuery("select * from Movie");
-				
-		while(res.next()) { // iterate through rows
-			
-			String data = "";
-					
-			for(int i = 0; i < 4; i++) { // iterates through columns					
-				data += res.getString(i+1) + " : ";
-			}
-			System.out.println(data);
-					
-		}
+		
 				
 		conn.close();
-		state.close();
 		input.close();
 		
 	}
@@ -75,12 +82,39 @@ public class MovieDatabase {
 	
 	public int main_menu() {
 		
-		String new_line = System.getProperty("line.separator");
-		System.out.println("Would you like to: " + new_line + "1) Add a movie " + new_line + "2) Access a movie " + new_line + "3) Delete a movie" + new_line + "4) Quit"); // or browse
-		System.out.println();
-		int ans = input.nextInt();
+		int counter = 0;
 		
-		return ans;
+		System.out.println(border);
+		System.out.println("Would you like to: " + new_line);
+		
+		while(true){
+			
+			// if(counter > 0) System.out.println(border);
+			
+			System.out.println("1) Browse the current movies in the database" + 
+					new_line + "2) Add a movie to the database" + new_line + "3) Delete a movie from the database" + 
+					new_line + "4) Update a movie in the database" + new_line + "5) Exit the database"); // or browse
+			System.out.println(border);
+			System.out.print("Enter selection: ");
+			
+			try{
+				if(counter > 0) input.nextLine();
+			
+				int ans = input.nextInt();
+				
+				if(ans > 0 && ans < 6) return ans;
+				
+				else {
+					System.out.println(border);
+					System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+				}
+			}
+			catch(Exception e) {
+				System.out.println(border);
+				System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+				counter++;
+			}
+		}
 		
 	}
 
