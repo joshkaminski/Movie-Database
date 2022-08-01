@@ -17,7 +17,8 @@ public class RemoveMovie {
 	
 	// strings used to organize output
 	String new_line = System.getProperty("line.separator");
-	String border = "****************************************************************************************************";
+	String border = "*****************************************************************"
+			+ "***********************************";
 	
 	// variable that keeps track of the running state of program
 	boolean running = true;
@@ -38,7 +39,8 @@ public class RemoveMovie {
 		while(running) {
 			
 			System.out.println(border);
-			System.out.println("You have selected to remove a movie from the database" + new_line + "Enter \"CANCEL\" at any time to return to the main menu");
+			System.out.println("You have selected to remove a movie from the database" + 
+					new_line + "Enter \"CANCEL\" at any time to return to the main menu");
 			System.out.println(border);
 			
 			// calls method that gets movie info from user 
@@ -72,7 +74,9 @@ public class RemoveMovie {
 			if(check_result.next()) { 
 			
 				System.out.println(border);
-				System.out.println("\"" + title + "\"" + " (" + year + ")" +  " has been found in the database. Are you sure you would like to delete the following movie?:" + new_line);
+				System.out.println("\"" + title + "\"" + " (" + year + ")" +  " has been "
+						+ "found in the database. Are you sure you would like to delete the "
+						+ "following movie?:" + new_line);
 				System.out.println(break_line);
 				
 				// outputs the movie that was found in the database
@@ -84,7 +88,8 @@ public class RemoveMovie {
 				
 				// warns user that removing a movie cannot be undone 
 				System.out.println(break_line + new_line);
-				System.out.println("Deleting " + "\"" + title + "\"" + " (" + year + ")" + " cannot be undone. Type 'DELETE' to confirm, or any other key to cancel.");
+				System.out.println("Deleting " + "\"" + title + "\"" + " (" + year + ")" + 
+						" cannot be undone. Type 'DELETE' to confirm, or any other key to cancel.");
 				System.out.println(border);
 				System.out.print("Enter selection: ");
 				
@@ -104,7 +109,8 @@ public class RemoveMovie {
 					
 					// tells user that movie has been removed from the database
 					System.out.println(border);
-					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has been successfully deleted from the database.");
+					System.out.println("\"" + title + "\"" + " (" + year + ")" + 
+							" has been successfully deleted from the database.");
 					System.out.println(border);
 					
 					// closes remove statement
@@ -114,7 +120,8 @@ public class RemoveMovie {
 				// tells user that movie was not removed if the don't enter DELETE
 				else {
 					System.out.println(border);
-					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has not been deleted from the database.");
+					System.out.println("\"" + title + "\"" + " (" + year + ")" + 
+							" has not been deleted from the database.");
 					System.out.println(border);
 				}
 			}
@@ -122,12 +129,14 @@ public class RemoveMovie {
 			// tells user movie cannot be removed if the movie isn't in the database
 			else {
 				System.out.println(border);
-				System.out.println("\"" + title + "\"" + " (" + year + ")" + " has not been found in the database. Cannot delete movie.");
+				System.out.println("\"" + title + "\"" + " (" + year + ")" + 
+						" has not been found in the database. Cannot delete movie.");
 				System.out.println(border);
 			}
 			
 			// asks user if they would like to remove another movie
-			System.out.println("Would you like to: " + new_line + new_line + "1) Delete another movie " + new_line + "2) Return to the menu");
+			System.out.println("Would you like to: " + new_line + new_line + 
+						"1) Delete another movie " + new_line + "2) Return to the menu");
 			System.out.println(border);
 			System.out.print("Enter selection: ");
 			
@@ -154,7 +163,8 @@ public class RemoveMovie {
 		
 			// runs if waiting for title input
 			if(step == 0) {
-				System.out.println("What is the title of the movie you would like to remove from the database?" + new_line);
+				System.out.println("What is the title of the movie you would like to "
+						+ "remove from the database?" + new_line);
 				System.out.print("Enter title: ");
 				
 				// gets user input and checks to see if user wants to cancel
@@ -181,7 +191,9 @@ public class RemoveMovie {
 					if(temp_year.equals("CANCEL")) return 0;
 					
 					// checks if user input is valid
-					if(temp_year.length() != 4 || Integer.parseInt(temp_year) < 1895 || Integer.parseInt(temp_year) > Calendar.getInstance().get(Calendar.YEAR)) throw new IllegalStateException();
+					if(temp_year.length() != 4 || Integer.parseInt(temp_year) < 1895 
+							|| Integer.parseInt(temp_year) > Calendar.getInstance().get(Calendar.YEAR)) 
+						throw new IllegalStateException();
 					
 					// casts user input to integer
 					year = Integer.parseInt(temp_year);				
@@ -189,7 +201,8 @@ public class RemoveMovie {
 				// runs if user does not enter an integer
 				catch(Exception e){
 					System.out.println(border);
-					System.out.println("Invalid input. Please enter an integer representing the year that " + title + " was released.");
+					System.out.println("Invalid input. Please enter an integer representing the year "
+							+ "that " + title + " was released.");
 					
 					// increments counter of how many times the user has been asked for the year
 					counter_year++;

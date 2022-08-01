@@ -13,7 +13,8 @@ public class BrowseMovie{
 	// strings used to organize output
 	String new_line = System.getProperty("line.separator");
 	String break_line = "";
-	String border = "****************************************************************************************************";
+	String border = "*****************************************************************"
+			+ "***********************************";
 	
 	// constructor takes scanner as input
 	public BrowseMovie(Scanner in) {
@@ -169,14 +170,16 @@ public class BrowseMovie{
 				// if input is not valid, tells user and loop will run again 
 				else {
 					System.out.println(border);
-					System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+					System.out.println("Invalid input. Please enter an integer 1-5, "
+							+ "corresponding to one of the following menu options:" + new_line);
 				}
 			}
 			
 			// if input is not valid, tells user and loop will run again 
 			catch(Exception e) {
 				System.out.println(border);
-				System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+				System.out.println("Invalid input. Please enter an integer 1-5, "
+						+ "corresponding to one of the following menu options:" + new_line);
 				counter++;
 			}
 		}

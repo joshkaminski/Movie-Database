@@ -19,7 +19,8 @@ public class AddMovie{
 		
 	// strings used to organize output
 	String new_line = System.getProperty("line.separator");
-	String border = "****************************************************************************************************";
+	String border = "*****************************************************************"
+			+ "***********************************";
 	
 	// variable that keeps track of the running state of program
 	boolean running = true;
@@ -40,7 +41,8 @@ public class AddMovie{
 		while(running) {
 			
 			System.out.println(border);
-			System.out.println("You have selected to add a movie to the database" + new_line + "Enter \"CANCEL\" at any time to return to the main menu");
+			System.out.println("You have selected to add a movie to the database" + new_line + 
+					"Enter \"CANCEL\" at any time to return to the main menu");
 			System.out.println(border);
 			
 			// calls method that gets movie info from user 
@@ -62,8 +64,10 @@ public class AddMovie{
 				// checks if the movie already exists in the database and outputs error message if it does
 				if(check_result.getInt(1) == 1) {
 					System.out.println(border);
-					System.out.println("\"" + title + "\"" + " (" + year + ")" + " already exists in the database.");
-					System.out.println("\"" + title + "\"" + " (" + year + ")" + " was not added to the database a second time.");
+					System.out.println("\"" + title + "\"" + " (" + year + ")" + 
+							" already exists in the database.");
+					System.out.println("\"" + title + "\"" + " (" + year + ")" + 
+							" was not added to the database a second time.");
 					System.out.println(border);
 				}
 				
@@ -81,7 +85,8 @@ public class AddMovie{
 					
 					// tells user that movie has been added to the database
 					System.out.println(border);
-					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has been successfully added to the database.");
+					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has "
+							+ "been successfully added to the database.");
 					System.out.println(border);
 					
 					// closes add statement
@@ -89,7 +94,8 @@ public class AddMovie{
 				}
 			}
 			// asks user if they would like to add another movie
-			System.out.println("Would you like to: " + new_line + new_line + "1) Add another movie " + new_line + "2) Return to the menu");
+			System.out.println("Would you like to: " + new_line + new_line + "1) "
+					+ "Add another movie " + new_line + "2) Return to the menu");
 			System.out.println(border);
 			System.out.print("Enter selection: ");
 			
@@ -117,7 +123,8 @@ public class AddMovie{
 		
 			// runs if waiting for title input
 			if(step == 0) {
-				System.out.println("What is the title of the movie you would like to add to the database?" + new_line);
+				System.out.println("What is the title of the movie you would like "
+						+ "to add to the database?" + new_line);
 				System.out.print("Enter title: ");
 				
 				// gets user input and checks to see if user wants to cancel
@@ -144,7 +151,9 @@ public class AddMovie{
 					if(temp_year.equals("CANCEL")) return 0;
 					
 					// checks if user input is valid
-					if(temp_year.length() != 4 || Integer.parseInt(temp_year) < 1895 || Integer.parseInt(temp_year) > Calendar.getInstance().get(Calendar.YEAR)) throw new IllegalStateException();
+					if(temp_year.length() != 4 || Integer.parseInt(temp_year) < 1895 
+							|| Integer.parseInt(temp_year) > Calendar.getInstance().get(Calendar.YEAR)) 
+						throw new IllegalStateException();
 					
 					// casts user input to integer
 					year = Integer.parseInt(temp_year);
@@ -156,7 +165,8 @@ public class AddMovie{
 				// runs if user does not enter an integer
 				catch(Exception e){
 					System.out.println(border);
-					System.out.println("Invalid input. Please enter an integer representing the year that " + "\"" + title + "\"" + " was released.");
+					System.out.println("Invalid input. Please enter an integer representing the "
+							+ "year that " + "\"" + title + "\"" + " was released.");
 					
 					// increments counter of how many times the user has been asked for the year
 					counter_year++;
@@ -170,7 +180,8 @@ public class AddMovie{
 					// runs if this is the first time asking for the rating
 					if(counter_rating == 0) {
 						System.out.println(border);
-						System.out.println("What is the rating (from 0-10) of " + "\"" + title + "\"" + "?");
+						System.out.println("What is the rating (from 0-10) of " + "\"" + 
+						title + "\"" + "?");
 					}
 					System.out.print(new_line + "Enter rating: ");
 					
@@ -179,7 +190,8 @@ public class AddMovie{
 					if(temp_rating.equals("CANCEL")) return 0;
 					
 					// checks if user input is valid
-					if(Double.parseDouble(temp_rating) < 0 || Double.parseDouble(temp_rating) > 10) throw new IllegalStateException();
+					if(Double.parseDouble(temp_rating) < 0 || Double.parseDouble(temp_rating) > 10) 
+						throw new IllegalStateException();
 					
 					// casts user input to double
 					rating = Double.parseDouble(temp_rating);
@@ -191,7 +203,8 @@ public class AddMovie{
 				// runs if user does not enter a double
 				catch(Exception e){
 					System.out.println(border);
-					System.out.println("Invalid input. Please enter an number representing the rating (from 0-10) of " + "\"" + title + "\"" + ".");
+					System.out.println("Invalid input. Please enter an number representing the rating ("
+							+ "from 0-10) of " + "\"" + title + "\"" + ".");
 					
 					// increments counter of how many times the user has been asked for the year
 					counter_rating++;

@@ -20,7 +20,8 @@ public class MovieDatabase {
 	// UpdateMovie update = new UpdateMovie();
 	
 	// strings used to organize output
-	String border = "****************************************************************************************************";
+	String border = "*****************************************************************"
+			+ "***********************************";	
 	String new_line = System.getProperty("line.separator");
 	
 	// variables that keep track of current state of program
@@ -69,7 +70,8 @@ public class MovieDatabase {
 			
 			// runs if user selects to exit program
 			else {
-				System.out.println(border + new_line + "Thank you for using the Movie Database. Goodbye.");
+				System.out.println(border + new_line + "Thank you for using the Movie "
+						+ "Database. Goodbye.");
 				break;
 				
 			}
@@ -95,8 +97,8 @@ public class MovieDatabase {
 			
 			// asks user for input
 			System.out.println("1) Browse the current movies in the database" + 
-					new_line + "2) Add a movie to the database" + new_line + "3) Delete a movie from the database" + 
-					new_line + "4) Exit the database"); // or browse
+					new_line + "2) Add a movie to the database" + new_line + "3) "
+					+ "Delete a movie from the database" + new_line + "4) Exit the database"); 
 			System.out.println(border);
 			System.out.print("Enter selection: ");
 			
@@ -112,13 +114,15 @@ public class MovieDatabase {
 				// if input is not valid, tells user and loop will run again 
 				else {
 					System.out.println(border);
-					System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+					System.out.println("Invalid input. Please enter an integer 1-5, corresponding "
+							+ "to one of the following menu options:" + new_line);
 				}
 			}
 			// if input is not valid, tells user and loop will run again 
 			catch(Exception e) {
 				System.out.println(border);
-				System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+				System.out.println("Invalid input. Please enter an integer 1-5, corresponding "
+						+ "to one of the following menu options:" + new_line);
 				counter++;
 			}
 		}	
