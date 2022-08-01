@@ -84,118 +84,134 @@ public class AddMovie{
 					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has been successfully added to the database.");
 					System.out.println(border);
 					
+					// closes add statement
+					add_statement.close();
 				}
 			}
-			
-			String new_line = System.getProperty("line.separator");
+			// asks user if they would like to add another movie
 			System.out.println("Would you like to: " + new_line + new_line + "1) Add another movie " + new_line + "2) Return to the menu");
 			System.out.println(border);
-			//System.out.println();
 			System.out.print("Enter selection: ");
-			int ans = input.nextInt();
 			
+			// loop won't run again if they don't want to add another movie
+			int ans = input.nextInt();
 			if(ans == 2) {
 				running = false;
 			}
 			
+			// closes check statement
 			check_statement.close();
-			
 		}
-		
-		
 	}
 	
+	// method that gets movie info from the user 
 	public int get_input() {
 		
+		// variables that keep track of which info has been recorded in the case of invalid input
 		int step = 0;
 		int counter_year = 0;
 		int counter_rating = 0;
 		
-		// System.out.println("What is the title of the movie you would like to add to the database?");
-		
+		// runs until user enters valid input
 		while(true) {
 		
+			// runs if waiting for title input
 			if(step == 0) {
-				System.out.println("What is the title of the movie you would like to add to the database?");
-				System.out.println();
-				//System.out.println(border);
+				System.out.println("What is the title of the movie you would like to add to the database?" + new_line);
 				System.out.print("Enter title: ");
+				
+				// gets user input and checks to see if user wants to cancel
 				input.nextLine();
 				title = input.nextLine().trim();
 				if(title.equals("CANCEL")) return 0;
+				
+				// increments step counter
 				step++;
 			}
 			
+			// runs if waiting for year input
 			if(step == 1) {
 				try {
-					// if(counter_year > 0) input.nextLine();
-					
+					// runs if this is the first time asking for the year
 					if(counter_year == 0) {
 						System.out.println(border);
 						System.out.println("What is the year " + "\"" + title + "\"" + " was released?");
 					}
-					System.out.println();
-					System.out.print("Enter year: ");
+					System.out.print(new_line + "Enter year: ");
+					
+					// gets user input and checks to see if user wants to cancel
 					String temp_year = input.nextLine().trim();
 					if(temp_year.equals("CANCEL")) return 0;
+					
+					// checks if user input is valid
 					if(temp_year.length() != 4 || Integer.parseInt(temp_year) < 1895 || Integer.parseInt(temp_year) > Calendar.getInstance().get(Calendar.YEAR)) throw new IllegalStateException();
 					
+					// casts user input to integer
 					year = Integer.parseInt(temp_year);
+					
+					// increments step counter
 					step++;
-				
 				}
+				
+				// runs if user does not enter an integer
 				catch(Exception e){
 					System.out.println(border);
 					System.out.println("Invalid input. Please enter an integer representing the year that " + "\"" + title + "\"" + " was released.");
-					// System.out.println();
-					// System.out.print("Enter year: ");
+					
+					// increments counter of how many times the user has been asked for the year
 					counter_year++;
 					continue;
 				}
 			}
 		
+			// runs if waiting for rating input
 			if(step == 2) {
 				try {
-					//if(counter_rating > 0) input.nextLine();
+					// runs if this is the first time asking for the rating
 					if(counter_rating == 0) {
 						System.out.println(border);
 						System.out.println("What is the rating (from 0-10) of " + "\"" + title + "\"" + "?");
 					}
-					System.out.println();
-					System.out.print("Enter rating: ");
+					System.out.print(new_line + "Enter rating: ");
+					
+					// gets user input and checks to see if user wants to cancel
 					String temp_rating = input.nextLine().trim();
 					if(temp_rating.equals("CANCEL")) return 0;
 					
+					// checks if user input is valid
+					if(Double.parseDouble(temp_rating) < 0 || Double.parseDouble(temp_rating) > 10) throw new IllegalStateException();
+					
+					// casts user input to double
 					rating = Double.parseDouble(temp_rating);
+					
+					// increments step counter
 					step++;
 				}
+				
+				// runs if user does not enter a double
 				catch(Exception e){
-					//String in = input.nextLine().trim();
-					//if(in.toLowerCase().equals("cancel")) return 0;
-					
 					System.out.println(border);
-					System.out.println("Invalid input. Please enter an number representing the rating (from 0-10) of " + "\"" + title + "\"" +  "?");
-					//System.out.println();
-					//System.out.print("Enter rating: ");
+					System.out.println("Invalid input. Please enter an number representing the rating (from 0-10) of " + "\"" + title + "\"" + ".");
+					
+					// increments counter of how many times the user has been asked for the year
 					counter_rating++;
 					continue;
 				}
 			}
 			
+			// runs if waiting for genre input
 			if(step == 3) {
 				System.out.println(border);
-				System.out.println("What is the genre of " + "\"" + title + "\"" +  "?");
-				System.out.println();
+				System.out.println("What is the genre of " + "\"" + title + "\"" +  "?" + new_line);
 				System.out.print("Enter genre: ");
-				// input.nextLine();
+				
+				// gets user input and checks to see if user wants to cancel
 				genre = input.nextLine().trim();
 				if(genre.equals("CANCEL")) return 0;
-				return 1;
 			}
 			
+			// returns nonzero value if all user input has been correctly received
+			return 1;
 		}
-			
-		
-		// return 0;
 	}
 }
