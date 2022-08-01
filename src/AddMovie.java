@@ -4,64 +4,82 @@ import java.util.*;
 
 public class AddMovie{
 	
-	String new_line = System.getProperty("line.separator");
-	String border = "***************************************************************************";
-	
+	// variable that allows for user input to be received 
 	Scanner input;
 	
+	// strings that hold the queries and commands to be passed into the statements
+	String add = "INSERT INTO Movie VALUES (?, ?, ?, ?)";
+	String check = "SELECT count(*) from Movie WHERE title = ? AND year = ?";
+		
+	// variables that hold data about the movie
 	String title = "";
 	int year = 0;
 	double rating = 0.0;
 	String genre = "";
+		
+	// strings used to organize output
+	String new_line = System.getProperty("line.separator");
+	String border = "****************************************************************************************************";
 	
-	String add = "INSERT INTO Movie VALUES (?, ?, ?, ?)";
-	String check = "SELECT count(*) from Movie WHERE title = ? AND year = ?";
-	
+	// variable that keeps track of the running state of program
 	boolean running = true;
 	
+	// constructor takes scanner as input
 	public AddMovie(Scanner in) {
 	
 		input = in;
 	}
 	
+	// method that allows a movie to be added to the database
 	public void add_movie(Connection conn) throws SQLException {
 		
+		// ensures that running variable is set to true 
 		running = true;
 		
+		// runs while user wants to add movies 
 		while(running) {
 			
 			System.out.println(border);
 			System.out.println("You have selected to add a movie to the database" + new_line + "Enter \"CANCEL\" at any time to return to the main menu");
 			System.out.println(border);
-		
+			
+			// calls method that gets movie info from user 
 			int run = get_input();
 			
+			// if user cancels adding a movie, breaks the loop and returns to main menu
 			if(run == 0) break;
-			// get_input();
 			
+			// creates a prepared statement to check for a movie in the database
 			PreparedStatement check_statement = conn.prepareStatement(check);
 			check_statement.setString(1, title);
 			check_statement.setInt(2, year);
 			
+			// executes query and stores results in a ResultSet
 			ResultSet check_result = check_statement.executeQuery();
 			
 			if(check_result.next()) {
 				
+				// checks if the movie already exists in the database and outputs error message if it does
 				if(check_result.getInt(1) == 1) {
 					System.out.println(border);
 					System.out.println("\"" + title + "\"" + " (" + year + ")" + " already exists in the database.");
 					System.out.println("\"" + title + "\"" + " (" + year + ")" + " was not added to the database a second time.");
 					System.out.println(border);
 				}
+				
+				// runs if movie does not exist in the database
 				else{
+					// prepares statement that will add movie 
 					PreparedStatement add_statement = conn.prepareStatement(add);
 					add_statement.setString(1, title);
 					add_statement.setInt(2, year);
 					add_statement.setDouble(3, rating);
 					add_statement.setString(4, genre);
 				
+					// adds movie to the database
 					add_statement.executeUpdate();
 					
+					// tells user that movie has been added to the database
 					System.out.println(border);
 					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has been successfully added to the database.");
 					System.out.println(border);
@@ -181,178 +199,3 @@ public class AddMovie{
 		// return 0;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//JFrame f = new JFrame("Add a Movie");
-//
-//JLabel page_title = new JLabel("Add to the Movie Database", SwingConstants.CENTER);
-//
-//JLabel title_label = new JLabel("Title:");
-//JLabel year_label = new JLabel("Year:");
-//JLabel rating_label = new JLabel("Rating:");
-//JLabel genre_label = new JLabel("Genre:");
-//
-//JTextField title_field = new JTextField();
-//JTextField year_field = new JTextField();
-//JTextField rating_field = new JTextField();
-//JTextField genre_field = new JTextField();
-//
-//JPanel spacer1 = new JPanel();
-//JPanel spacer2 = new JPanel();
-//
-//JButton back_button = new JButton("Back");
-//JButton add_button = new JButton("Add");
-//
-//String default_result = "Enter movie details and click \"add\" to add a movie to the database";
-//String added_result = "You've successfylly added a movie! Enter movie details to add another";
-//JLabel result = new JLabel(default_result);
-//JPanel button_panel = new JPanel();
-//
-//GridBagLayout grid_bag = new GridBagLayout();
-//GridBagConstraints constraints = new GridBagConstraints();
-//
-//public AddMovieFrame(){
-//	
-//	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-//	f.setBackground(Color.white);
-//	
-//	f.setLayout(grid_bag);
-//	constraints.fill = GridBagConstraints.HORIZONTAL;
-//	
-//	page_title.setFont(new Font("Verdana", Font.PLAIN, 18));
-//	page_title.setBorder(new EmptyBorder(10,50,10,50));
-//	
-//	title_label.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	year_label.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	rating_label.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	genre_label.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	
-//	title_field.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	year_field.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	rating_field.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	genre_field.setFont(new Font("Verdana", Font.PLAIN, 15));
-//	
-//	result.setBorder(new EmptyBorder(40,0,10,0));
-//	
-////	title_label.setBorder(new EmptyBorder(10,0,10,0));
-////	year_label.setBorder(new EmptyBorder(10,0,10,0));
-////	rating_label.setBorder(new EmptyBorder(10,0,10,0));
-////	genre_label.setBorder(new EmptyBorder(10,0,10,0));
-//	
-//	//title_label.setFont(new Font("Verdana", Font.PLAIN, 12));
-//	//year_label.setFont(new Font("Verdana", Font.PLAIN, 12));
-//	
-//	button_panel.setLayout(new GridLayout(1,2));
-//	button_panel.add(back_button);
-//	button_panel.add(add_button);
-//	
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 0;
-//	constraints.gridwidth = 10;
-//	f.add(page_title, constraints);
-//	constraints.gridwidth = 3;
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 1;
-//	f.add(title_label, constraints);
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 2;
-//	f.add(year_label, constraints);
-//
-//	constraints.gridx = 0;
-//	constraints.gridy = 3;
-//	f.add(rating_label, constraints);
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 4;
-//	f.add(genre_label, constraints);
-//	
-//	constraints.gridwidth = 7;
-//	
-//	constraints.gridx = 3;
-//	constraints.gridy = 1;
-//	f.add(title_field, constraints);
-//	
-//	constraints.gridx = 3;
-//	constraints.gridy = 2;
-//	f.add(year_field, constraints);
-//	
-//	constraints.gridx = 3;
-//	constraints.gridy = 3;
-//	f.add(rating_field, constraints);
-//	
-//	constraints.gridx = 3;
-//	constraints.gridy = 4;
-//	f.add(genre_field, constraints);
-//	
-//	constraints.gridwidth = 10;
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 5;
-//	f.add(spacer1, constraints);
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 6;
-//	f.add(spacer2, constraints);
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 7;
-//	f.add(button_panel, constraints);
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 8;
-//	f.add(result, constraints);
-//	
-//	
-//	f.setSize(550, 450); // sets up frame size
-//	f.setVisible(true);
-//	
-//}
-//
-//public static void main(String[] args) {
-//	
-//	new AddMovieFrame();
-//
-//}

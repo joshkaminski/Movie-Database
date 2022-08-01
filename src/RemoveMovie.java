@@ -1,6 +1,3 @@
-// FIX SPACING FOR CONFIRMATION OUTPUT
-// ADD ENTER SELECTION: FOR DELETE
-
 import java.sql.*;
 import java.io.*;
 import java.util.*;
@@ -8,7 +5,7 @@ import java.util.*;
 public class RemoveMovie {
 	
 	String new_line = System.getProperty("line.separator");
-	String border = "***************************************************************************";
+	String border = "****************************************************************************************************";
 	
 	Scanner input;
 	
@@ -55,6 +52,18 @@ public class RemoveMovie {
 			check_statement.setString(1, title);
 			check_statement.setInt(2, year);
 			
+			ResultSet res = check_statement.executeQuery();
+			
+			String break_line = "";
+			
+			if(res.next()) {
+				
+				for(int i = 0; i < res.getString(1).length() + res.getString(4).length() + 20; i++) {
+					break_line += "-";
+				}
+		
+			}
+			
 			ResultSet check_result = check_statement.executeQuery();
 		
 			if(check_result.next()) { // iterate through rows
@@ -62,14 +71,18 @@ public class RemoveMovie {
 				System.out.println(border);
 				System.out.println("\"" + title + "\"" + " (" + year + ")" +  " has been found in the database. Are you sure you would like to delete the following movie?:" + new_line);
 					
-				String data = "";
+				System.out.println(break_line);
+				String data = "| ";
 				for(int i = 0; i < 4; i++) { // iterates through columns					
-				data += check_result.getString(i+1) + " : ";
+					data += check_result.getString(i+1) + " | ";
 				}
 				System.out.println(data);
-				System.out.println("Deleting " + "\"" + title + "\"" + " (" + year + ")" + " cannot be undone. Type 'DELETE' to confirm,  or any other key to cancel.");
-			
-				input.nextLine();
+				
+				System.out.println(break_line + new_line);
+				System.out.println("Deleting " + "\"" + title + "\"" + " (" + year + ")" + " cannot be undone. Type 'DELETE' to confirm, or any other key to cancel.");
+				System.out.println(border);
+				System.out.print("Enter selection: ");
+				// input.nextLine();
 				String ans = input.nextLine();
 			
 				if(ans.equals("DELETE")) {
@@ -80,10 +93,15 @@ public class RemoveMovie {
 				
 					remove_statement.executeUpdate();
 					
-					System.out.println();
-					System.out.println(title + " has been successfully deleted from the database.");
-					System.out.println();
+					System.out.println(border);
+					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has been successfully deleted from the database.");
+					System.out.println(border);
 				}	
+				else {
+					System.out.println(border);
+					System.out.println("\"" + title + "\"" + " (" + year + ")" + " has not been deleted from the database.");
+					System.out.println(border);
+				}
 			}
 			else {
 				System.out.println();
@@ -91,8 +109,9 @@ public class RemoveMovie {
 				System.out.println();
 			}
 			
-			System.out.println("Would you like to: " + new_line + "1) Delete another movie " + new_line + "2) Return to the menu");
-			System.out.println();
+			System.out.println("Would you like to: " + new_line + new_line + "1) Delete another movie " + new_line + "2) Return to the menu");
+			System.out.println(border);
+			System.out.print("Enter selection:");
 			int ans2 = input.nextInt();
 		
 			if(ans2 == 2) {
@@ -130,7 +149,7 @@ public class RemoveMovie {
 					
 					if(counter_year == 0) {
 						System.out.println(border);
-						System.out.println("What is the year " + title + " was released?");
+						System.out.println("What is the year " + "\"" + title + "\"" + " was released?");
 					}
 					System.out.println();
 					System.out.print("Enter year: ");

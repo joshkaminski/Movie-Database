@@ -6,6 +6,8 @@ public class BrowseMovie{
 	
 	String new_line = System.getProperty("line.separator");
 	String break_line = "";
+	String border = "****************************************************************************************************";
+
 	
 	Scanner input;
 	
@@ -17,6 +19,25 @@ public class BrowseMovie{
 	}
 	
 	public void browse_movie(Connection conn) throws SQLException {
+		
+		int selection = sort_menu();
+		
+		if(selection == 1) {
+			select = "select * from Movie";
+		}
+		else if(selection == 2) {
+			select = "select * from Movie order by Title, Year desc, Rating desc, Genre";
+		}
+		else if(selection == 3){
+			select = "select * from Movie order by Year desc, Title, Rating desc, Genre";
+		}
+		else if(selection == 4){
+			select = "select * from Movie order by Rating desc, Title, Year desc, Genre";
+		}
+		else {
+			select = "select * from Movie order by Genre, Title, Year desc, Rating desc";
+			
+		}
 		
 		break_line = "   ";
 		
@@ -40,7 +61,7 @@ public class BrowseMovie{
 		
 		ResultSet res = state.executeQuery(select);
 		
-		
+		System.out.println(border);
 		System.out.println("The current movies in the database are:" + new_line);
 		System.out.println(break_line);
 		int counter = 1;
@@ -95,117 +116,42 @@ public class BrowseMovie{
 		
 		state.close();
 	}
+	
+	public int sort_menu() {
+		
+		int counter = 0;
+	
+		System.out.println("Would you like to sort the movies by: " + new_line);
+		
+		while(true){
+			
+			// if(counter > 0) System.out.println(border);
+			
+			System.out.println("1) Date added" + 
+					new_line + "2) Title (alphabetically)" + new_line + "3) Year released" + 
+					new_line + "4) Rating" + new_line + "5) Genre (alphabetically)"); // or browse
+			System.out.println(border);
+			System.out.print("Enter selection: ");
+			
+			try{
+				if(counter > 0) input.nextLine();
+			
+				int ans = input.nextInt();
+				
+				if(ans > 0 && ans < 6) return ans;
+				
+				else {
+					System.out.println(border);
+					System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+				}
+			}
+			catch(Exception e) {
+				System.out.println(border);
+				System.out.println("Invalid input. Please enter an integer 1-5, corresponding to one of the following menu options:" + new_line);
+				counter++;
+			}
+		}
+		
+	}
 
 }
-
-//JFrame f = new JFrame("Movie Database");
-//
-//JPanel top_panel = new JPanel();
-//JPanel bottom_panel = new JPanel();
-//
-//JLabel page_title = new JLabel("Welcome to the Movie Database", SwingConstants.CENTER);
-//
-//JTextField search_bar = new JTextField();
-//JButton search_button = new JButton("Search"); 
-//JButton add_button = new JButton("Add New Movie"); 
-//
-//JLabel sort_label = new JLabel("Sort By:");
-//JRadioButton recent_button = new JRadioButton("Recent", true);
-//JRadioButton title_button = new JRadioButton("Title");
-//JRadioButton year_button = new JRadioButton("Year");
-//JRadioButton rating_button = new JRadioButton("Rating");
-//JRadioButton genre_button = new JRadioButton("Genre");
-//
-//ButtonGroup sort = new ButtonGroup();
-//
-//GridBagLayout grid_bag = new GridBagLayout();
-//GridBagConstraints constraints = new GridBagConstraints();
-//
-//public BrowseMovieFrame(){
-//	
-//	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-//	f.setBackground(Color.white); 
-//	f.add(top_panel, BorderLayout.NORTH);
-//	bottom_panel.setBackground(Color.BLUE);
-//	f.add(bottom_panel, BorderLayout.CENTER);
-//	
-//	top_panel.setLayout(grid_bag);	
-//	constraints.fill = GridBagConstraints.HORIZONTAL;
-//	
-//	page_title.setFont(new Font("Verdana", Font.PLAIN, 18));
-//	page_title.setBorder(new EmptyBorder(12,0,12,0));
-//	
-//	search_bar.setFont(new Font("Verdana", Font.PLAIN, 16));
-//	
-//	sort_label.setBorder(new EmptyBorder(10,0,10,0));
-//	// page_title.set
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 0;
-//	constraints.gridwidth = 7;
-//	top_panel.add(page_title, constraints);
-//	constraints.gridwidth = 1;
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 1;
-//	constraints.gridwidth = 6;
-//	top_panel.add(search_bar, constraints);
-//	constraints.gridwidth = 1;
-//	
-//	constraints.gridx = 6;
-//	constraints.gridy = 1; // 
-//	top_panel.add(search_button, constraints);
-//	
-//	constraints.gridx = 6; // 
-//	constraints.gridy = 2;
-//	top_panel.add(add_button, constraints);
-//	
-//	constraints.gridx = 0;
-//	constraints.gridy = 2; // 
-//	top_panel.add(sort_label, constraints);
-//	
-//	constraints.gridx = 1;
-//	constraints.gridy = 2; // 
-//	top_panel.add(recent_button, constraints);
-//	
-//	constraints.gridx = 2;
-//	constraints.gridy = 2; // 
-//	top_panel.add(title_button, constraints);
-//	
-//	constraints.gridx = 3;
-//	constraints.gridy = 2; // 
-//	top_panel.add(year_button, constraints);
-//	
-//	constraints.gridx = 4;
-//	constraints.gridy = 2; // 
-//	top_panel.add(rating_button, constraints);
-//	
-//	constraints.gridx = 5;
-//	constraints.gridy = 2; // 
-//	top_panel.add(genre_button, constraints);
-//	
-//	sort.add(recent_button);
-//	sort.add(title_button);
-//	sort.add(year_button);
-//	sort.add(rating_button);
-//	sort.add(genre_button);
-//	
-//	f.setSize(550, 450); // sets up frame size
-//	f.setVisible(true);
-//	
-//}
-//
-//public static void main(String[] args) {
-//	
-////	try {
-////        UIManager.setLookAndFeel(
-////                      "javax.swing.plaf.metal.MetalLookAndFeel");
-////                    //  "com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-////                    //UIManager.getCrossPlatformLookAndFeelClassName());
-////    } catch (Exception ex) {
-////        ex.printStackTrace();
-////    }
-//	
-//	new BrowseMovieFrame();
-//
-//}
