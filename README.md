@@ -1,7 +1,7 @@
 # Movie Database
 Movie database that keeps track of movies with ratings, genres, and other relevant information.
 
-**Welcome Screen**
+**Welcome Screen:**
 
 Greets users and offers several options to interact with the database: browse the current movies, add a new movie, delete a movie, or exit the database.
 
