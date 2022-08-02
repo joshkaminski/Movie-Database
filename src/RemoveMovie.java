@@ -80,11 +80,11 @@ public class RemoveMovie {
 				System.out.println(break_line);
 				
 				// outputs the movie that was found in the database
-				String data = "| ";
+				String movie = "| ";
 				for(int i = 0; i < 4; i++) { // iterates through columns					
-					data += check_result.getString(i+1) + " | ";
+					movie += check_result.getString(i+1) + " | ";
 				}
-				System.out.println(data);
+				System.out.println(movie);
 				
 				// warns user that removing a movie cannot be undone 
 				System.out.println(break_line + new_line);

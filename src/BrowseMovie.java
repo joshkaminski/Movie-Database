@@ -91,46 +91,46 @@ public class BrowseMovie{
 		while(res.next()) { 
 					
 			// outputs which number movie the loop is on and increments the counter
-			String data = Integer.toString(counter) + ")";
+			String movie = Integer.toString(counter) + ")";
 			if(counter < 10) {
-				data += " ";
+				movie += " ";
 			}
-			data += " |";
+			movie += " |";
 			counter++;
 			
 			// adds space padding in front of movie title to string
 			for(int i = 0; i < (max_title - res.getString(1).length() + 1)/2 + 1; i++) {
-				data += " ";
+				movie += " ";
 			}
 			
 			// adds movie title to string
-			data += res.getString(1);
+			movie += res.getString(1);
 			
 			// adds space padding after movie title to string
 			for(int i = 0; i < (max_title - res.getString(1).length())/2 + 1; i++) {
-				data += " ";
+				movie += " ";
 			}
 			
 			// adds year and rating to string
-			data += "| " + res.getString(2) + " | " + res.getString(3) + " | ";
+			movie += "| " + res.getString(2) + " | " + res.getString(3) + " | ";
 			
 			// adds space padding in front of movie genre to string
 			for(int i = 0; i < (max_genre - res.getString(4).length())/2 + 1; i++) {
-				data += " ";
+				movie += " ";
 			}
 			
 			// adds genre to string
-			data += res.getString(4);
+			movie += res.getString(4);
 			
 			// adds space padding after movie genre to string
 			for(int i = 0; i < (max_genre - res.getString(4).length() + 1)/2 + 1; i++) {
-				data += " ";
+				movie += " ";
 			}
 			
-			data += "|";
+			movie += "|";
 				
 			// outputs the data
-			System.out.println(data);
+			System.out.println(movie);
 			System.out.println(break_line);
 		}
 		
