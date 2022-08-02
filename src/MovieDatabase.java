@@ -21,7 +21,7 @@ public class MovieDatabase {
 	
 	// strings used to organize output
 	String border = "*****************************************************************"
-			+ "***********************************";	
+			+ "************************************************************";	
 	String new_line = System.getProperty("line.separator");
 	
 	// variables that keep track of current state of program

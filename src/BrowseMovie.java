@@ -14,7 +14,7 @@ public class BrowseMovie{
 	String new_line = System.getProperty("line.separator");
 	String break_line = "";
 	String border = "*****************************************************************"
-			+ "***********************************";
+			+ "************************************************************";
 	
 	// constructor takes scanner as input
 	public BrowseMovie(Scanner in) {

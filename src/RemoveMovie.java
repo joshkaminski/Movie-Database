@@ -18,7 +18,7 @@ public class RemoveMovie {
 	// strings used to organize output
 	String new_line = System.getProperty("line.separator");
 	String border = "*****************************************************************"
-			+ "***********************************";
+			+ "************************************************************";
 	
 	// variable that keeps track of the running state of program
 	boolean running = true;
